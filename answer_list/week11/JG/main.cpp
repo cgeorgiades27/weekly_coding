@@ -2,33 +2,81 @@
 
 #include <iostream>
 #include <vector>
-#include<string>
-#include<assert.h>
+#include <string>
+#include <assert.h>
+#include <stack>
+#include <cmath>
 
+bool isValid(std::string s)
+{
 
-  bool isValid(std::string s){
-      //# Fill this in. 
-  return false;
+  std::stack<char> stack;
+
+  if (s.size() % 2 != 0) //if string length is not even then false
+  {
+    return false;
   }
-   
+  for (int i = 0; i < s.size(); i++)
+  {
 
-int main() {
-    
-std::string s;
+    if (s[i] == '(' || s[i] == '{' || s[i] == '[')
+    {
+      stack.push(s[i]);
+    }
+    if (stack.empty())
+    {
+      return false;
+    }
+    char tempChar = stack.top();
+    //once we get to a closing char check if the item on top of stack is the oppening one if so pop it
+    if (((s[i] == ')' && tempChar == '(')) || ((s[i] == '}' && tempChar == '{')) || ((s[i] == ']' && tempChar == '[')))
+    {
+      stack.pop();
+    }
+  }
+  //if opening char remains in stack then it was unbalanced
+  if (!stack.empty())
+  {
+    return false;
+  }
 
-//# Test Program
-s = "()(){(())" ;
-//# should return False
-assert((isValid(s)==false) && "This should be false");
-   
+  return true;
+}
 
-s = "";
-//# should return True
-assert((isValid(s)==true) && "This should be true");
+int main()
+{
 
-s = "([{}])()";
-//# should return True
-assert((isValid(s)==false) && "This should be true");
+  std::string s;
 
-    return 0;
+  //# Test Program
+  s = "()(){(())";
+
+  //# should return False
+  assert((isValid(s) == false) && "This should be false");
+
+  s = "";
+  //# should return True
+  assert((isValid(s) == true) && "This should be true");
+
+  s = "([{}])()";
+  //# should return True
+  assert((isValid(s) == true) && "This should be true");
+
+  s = "(()()())";
+  //# should return True
+  assert((isValid(s) == true) && "This should be true");
+
+  s = "(";
+  //# should return False
+  assert((isValid(s) == false) && "This should be false");
+
+  s = "(*$*";
+  //# should return False
+  assert((isValid(s) == false) && "This should be false");
+
+  s = "(()())()";
+  //# should return True
+  assert((isValid(s) == true) && "This should be true");
+
+  return 0;
 }
