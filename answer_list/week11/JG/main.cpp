@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <stack>
 #include <cmath>
+#define NDEBUG
 
 bool isValid(std::string s)
 {
@@ -16,7 +17,7 @@ bool isValid(std::string s)
   {
     return false;
   }
-  for (int i = 0; i < s.size(); i++)
+  for (long unsigned int i = 0; i < s.size(); i++)
   {
 
     if (s[i] == '(' || s[i] == '{' || s[i] == '[')
@@ -66,7 +67,7 @@ int main()
   //# should return True
   assert((isValid(s) == true) && "This should be true");
 
-  s = "(";
+  s = "())";
   //# should return False
   assert((isValid(s) == false) && "This should be false");
 
