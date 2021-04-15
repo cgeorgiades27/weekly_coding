@@ -9,7 +9,8 @@ For example, if A is abcde and B is cdeab, return true. If A is abc and B is acb
 
 import sys
 
-def rollover(original, rolled):
+# O(n^2)
+def rollover1(original, rolled):
 
     placeholder = []
     for i in range(len(original)):
@@ -22,15 +23,36 @@ def rollover(original, rolled):
             print("matched on roll: {0}".format(i))
             return True
     return False
-        
+
+# O(n)
+def rollover2(original, rolled):
+    arr = [ char for char in original]
+    for i in range(len(original)):
+        arr.insert(0,arr.pop())
+        print("roll {0}: {1}".format(i,''.join(arr)))
+        if ''.join(arr) == rolled:
+            print("matched on roll: {0}".format(i))
+            return True
+    return False
+
 
 
 if len(sys.argv) > 1:
-    print(rollover(sys.argv[1],sys.argv[2]))
+    print("Rollover method 1:")
+    print(rollover1(sys.argv[1],sys.argv[2]))
+    print("Rollover method 2:")
+    print(rollover2(sys.argv[1],sys.argv[2]))
+
 else:
     original1 = "abcde"
     rolled1 = "cdeab"
-    print(rollover(original1,rolled1))
+    print("Rollover method 1:")
+    print(rollover1(original1,rolled1))
+    print("Rollover method 2:")
+    print(rollover2(original1,rolled1))
     original2 = "abc"
     rolled2 = "acb"
-    print(rollover(original2,rolled2))
+    print("Rollover method 1:")
+    print(rollover1(original2,rolled2))
+    print("Rollover method 2:")
+    print(rollover2(original2,rolled2))
