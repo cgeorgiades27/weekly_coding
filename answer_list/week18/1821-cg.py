@@ -14,7 +14,9 @@ class Solution:
 
     def autocomplete(self, word):
         # Fill this in.
-        print(self.table[word[0]])
+        arr = []
+        for i in len(word):
+            if self.table[word[0]][1] == word[1]
         return self.table[word[0]]
 
 
