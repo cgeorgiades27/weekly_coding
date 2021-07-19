@@ -12,7 +12,6 @@ def last_man_standing(souls: int, skipafew: int) -> int:
             soul_list.pop(goner)
             souls -= 1
             cnt = 0
-
         if goner >= souls-1:
             goner -= souls
     return soul_list.pop()
