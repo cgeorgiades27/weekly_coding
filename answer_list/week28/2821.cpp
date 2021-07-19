@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
 {
   if (argc < 3)
     {
-      std::cerr << "Too few args. USAGE ./exec N K\n";
-      exit(1);
+      std::cerr << "Too few args. USAGE " << argv[0] << " N K\n";
+      std::exit(EXIT_FAILURE);
     }
   
   size_t N = std::atoi(argv[1]);
@@ -32,9 +32,25 @@ int main(int argc, char *argv[])
   
   // prepare
   b_set bset;
+  size_t last;
   size_t count = 0;
+  
   for (size_t i = 0; i < N; ++i)
     bset.set(i);
+
+  // basecase 1
+  if (K >= N)
+    {
+      std::cerr << "K cannot be >= N, they won't be killed!\n"; 
+      std::exit(EXIT_FAILURE);
+    }
+  
+  // basecase 2
+  if (K == 1)
+    {
+      last = K;
+      goto END;
+    }
   
   while (bset.count() > 1)
     {
@@ -52,13 +68,14 @@ int main(int argc, char *argv[])
 	}
     }
 
-  size_t last;
   for (size_t i = 0; i < bset.size(); ++i)
     {
       if (bset.test(i))
 	last = i + 1; // adjust for index offset
     }
 
+ END:
   std::cout << "Best place to start: " << last << std::endl;
+  
   return 0;
 }
