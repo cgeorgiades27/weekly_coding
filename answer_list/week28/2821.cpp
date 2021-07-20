@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   // basecase 2
   if (K == 1)
     {
-      last = K;
+      last = N;
       goto END;
     }
   
