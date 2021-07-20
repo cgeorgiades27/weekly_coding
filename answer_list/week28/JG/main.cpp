@@ -56,7 +56,7 @@ int getLastToDie(int k, int n)
   std::shared_ptr<Person> tmp2;
   int killCount = 0;
 
-  for (size_t i = 0; i <= n; i++)
+  for (int i = 0; i <= n; i++)
   { // will initilize a circular linked list of size N
     if (i == 0)
     {
@@ -115,10 +115,14 @@ int getLastToDie(int k, int n)
 
 int main()
 {
-
   int k;
 
   int n;
+  std::cout << "Enter number of prisoners: " << std::endl;
+  std::cin >> n;
+  std::cout << "Enter starting position: " << std::endl;
+  std::cin >> k;
+  std::cout << "Best place to stand is: "<<getLastToDie(k, n) << std::endl;
 
   //# Test Program
 
