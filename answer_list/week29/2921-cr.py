@@ -11,8 +11,8 @@ class listsum:
 
 
 # Test
-tl1= [2, 8, 5, 1]
-tl2=[2, 1]		
+tl1 = [2, 8, 5, 1]
+tl2 = [2, 1]		
 listint = listsum(tl1,tl2)
 
-print(listsum.sum)
+print(listint.sum)
