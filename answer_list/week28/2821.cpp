@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
   size_t K = std::atoi(argv[2]);
   std::cout << "N = " << N << ", K = " << K << std::endl;
 
-  typedef std::bitset<16> b_set;
+  typedef std::bitset<64> b_set;
   
   // prepare
   b_set bset;
