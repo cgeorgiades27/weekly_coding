@@ -23,10 +23,11 @@ The most we can collect is `0 + 2 + 1 + 5 + 3 + 1 = 12` coins.
 #include <algorithm>
 #include <string>
 #include <cstdlib>
+#include <iomanip>
 
 typedef std::vector<std::vector<int>> matrix;
-int maxMatrixSum(matrix&, int &, int, int);
-void printMatrix(matrix&, std::ostream&); 
+int maxMatrixSum(matrix &, int &, int, int);
+void printMatrix(matrix &, std::ostream &);
 
 int main()
 {
@@ -36,16 +37,16 @@ int main()
   matrix m3{{1, 1, 0, 1}, {1, 1, 2, 6}, {2, 1, 6, 4}, {0, 1, 0, 3}};
   int max = 0;
 
-  std::vector<matrix> v {m0, m1, m2, m3};
+  std::vector<matrix> v{m0, m1, m2, m3};
   std::cout << "\nChoose one of the following matrices:\n";
   for (int i = 0; i < v.size(); ++i)
-    {
-      std::cout << "Matrix: " << i << "\n";
-      printMatrix(v[i], std::cout);
-    }
-  
+  {
+    std::cout << "Matrix: " << i << "\n";
+    printMatrix(v[i], std::cout);
+  }
+
   int choice;
-  std::cout << "Choose a matrix number (0-" << v.size() - 1 << "):\n";
+  std::cout << "Choose a matrix number (0-" << v.size() - 1 << "): ";
   std::cin >> choice;
   std::cout << "Testing Matrix: " << choice << '\n';
   printMatrix(v[choice], std::cout);
@@ -65,27 +66,28 @@ int maxMatrixSum(matrix &m, int &max, int i, int j)
   // Get max of subtrees
   int maxLeft = maxMatrixSum(m, max, i, jN);
   int maxRight = maxMatrixSum(m, max, iN, j);
-  
-  int maxOfAll = std::max(maxLeft, maxRight) + m[i][j];  
-  
+
+  int maxOfAll = std::max(maxLeft, maxRight) + m[i][j];
+
   if (maxOfAll > max)
     max = maxOfAll;
-  
+
   return maxOfAll;
 }
 
 // Print utility
-void printMatrix(matrix &m, std::ostream& os)
+void printMatrix(matrix &m, std::ostream &os)
 {
-  for (int i = 0; i < m.size(); ++i)
+
+  for (int i = 0; i < m[0].size(); ++i)
+  {
+    for (int j = 0; j < m.size(); ++j)
     {
-      for (int j = 0; j < m[i].size(); ++j)
-	{
-	  os << m[j][i];
-	  if (j == m[i].size() -1)
-	    os << '\n';
-	  else
-	    os << ' ';
-	}
+      os << std::setw(3) << m[j][i];
+      if (j == m.size() - 1)
+        os << '\n';
+      else
+        os << ' ';
     }
+  }
 }
