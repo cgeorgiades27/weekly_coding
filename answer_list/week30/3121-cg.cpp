@@ -78,7 +78,6 @@ int maxMatrixSum(matrix &m, int &max, int i, int j)
 // Print utility
 void printMatrix(matrix &m, std::ostream &os)
 {
-
   for (int i = 0; i < m[0].size(); ++i)
   {
     for (int j = 0; j < m.size(); ++j)
