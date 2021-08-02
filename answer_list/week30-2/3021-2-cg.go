@@ -15,16 +15,27 @@ package main
 import "fmt"
 
 func main() {
+	// decs
+	var choice int
+	arr0 := []int{3, 4, -1, 1, 3, 4, -1, 1}
 	arr1 := []int{3, 4, -1, 1}
 	arr2 := []int{1, 2, 0}
-	arrs := [][]int{arr1, arr2}
-	fmt.Println("Lowest is: ", lowestPositive(arrs[1]))
+	arrs := [][]int{arr0, arr1, arr2}
+
+	for i := range arrs {
+		fmt.Println("i:", i, arrs[i])
+	}
+
+	fmt.Println("Choose one of the arrays to test: ")
+	fmt.Scanln(&choice)
+	fmt.Println("Lowest is: ", lowestPositive(arrs[choice]))
 }
 
 // NOT constant space
 func lowestPositive(arr []int) int {
-	var lowest, max int = 0, 0
-	var coll = make([]int, 100, 100)
+	// we need these vars
+	lowest, max := 0, 0
+	coll := make([]int, 100, 100)
 
 	// holding container
 	for i := range arr {
@@ -40,14 +51,14 @@ func lowestPositive(arr []int) int {
 	}
 	// find the missing val > 0
 	for i := 0; i < max; i++ {
-		if coll[i] == 0 {
+		if coll[i] == 0 && i > 0 {
 			lowest = i
+			break
 		}
 	}
 	// lowest is next if none are missing
 	if lowest == 0 {
 		lowest = max + 1
 	}
-
 	return (lowest)
 }
