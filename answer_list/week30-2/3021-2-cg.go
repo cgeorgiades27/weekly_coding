@@ -23,7 +23,7 @@ func main() {
 	arrs := [][]int{arr0, arr1, arr2}
 
 	for i := range arrs {
-		fmt.Println("i:", i, arrs[i])
+		fmt.Println("array:", i, arrs[i])
 	}
 
 	fmt.Println("Choose one of the arrays to test: ")
