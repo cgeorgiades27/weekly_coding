@@ -1,3 +1,5 @@
+## First attempt. Only really works if it never encounters a dead end.
+
 class ComboLock:
 
     def __init__(self, combo, xplist):
