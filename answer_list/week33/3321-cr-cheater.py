@@ -23,4 +23,3 @@ bonus_list = [[3, 4, 6, 10, 11, 15], [1, 5, 8, 12, 14, 19]]
 
 print(merge(my_list, alices_list))
 print(multi_merge(bonus_list))
-
