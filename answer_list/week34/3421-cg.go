@@ -21,39 +21,49 @@ func main() {
 	playlists := [][]int{{1, 7, 3}, {2, 1, 6, 7, 9}, {3, 9, 5}}
 	graph := make(Graph)
 	visited := make(map[int]bool)
-	bestPositions := make(map[int]int)
+	worstPositions := make(map[int]int)
 	var result []int
 
+	// build the graph
 	for _, playlist := range playlists {
 		for j, track := range playlist {
 			if j+1 < len(playlist) {
 				graph[track] = append(graph[track], playlist[j+1])
 			}
 			visited[track] = false
+			// find worst positions
+			if val, exists := worstPositions[track]; exists && val < j {
+				worstPositions[track] = j
+			} else {
+				worstPositions[track] = j
+			}
 		}
 	}
-
-	dfs(graph, 2, &visited, &result)
-	fmt.Println(result, bestPositions)
+	/*
+	* find place to start dfs
+	* starting point will be the key that has the worst position of 0
+	 */
+	var startNum int
+	for key, val := range worstPositions {
+		if val == 0 {
+			startNum = key
+		}
+	}
+	fmt.Println("DFS(", startNum, "):", graph)
+	dfs(graph, startNum, &visited, &result)
+	fmt.Println(result)
 }
 
+// Recursive Depth First Search
 func dfs(g Graph, s int, vPtr *map[int]bool, result *[]int) {
-	// mark node as visited
-	(*vPtr)[s] = true
-	*result = append(*result, s)
 
+	// dfs() for every neighbor of s
+	(*vPtr)[s] = true
 	for _, i := range g[s] {
 		if !(*vPtr)[i] {
 			dfs(g, i, vPtr, result)
 		}
 	}
-}
-
-func includes(s []int, x int) bool {
-	for _, elem := range s {
-		if x == elem {
-			return true
-		}
-	}
-	return false
+	// append to results array in post-order
+	*result = append([]int{s}, *result...)
 }
