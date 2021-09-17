@@ -2,6 +2,7 @@
 
 
 def get_primes(limit: int) -> list:
+
     bool_dict = {x:True for x in range(2, limit)}
     prime_set = []
 
