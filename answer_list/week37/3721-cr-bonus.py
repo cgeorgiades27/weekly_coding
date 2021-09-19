@@ -1,5 +1,4 @@
 ## Sieve of Eratosthenes generator
-from itertools import count
 
 
 def make_primes(limit, skip=0) -> object:
@@ -16,24 +15,27 @@ def make_primes(limit, skip=0) -> object:
             bool_dict[total] = False
             total += x
 
-    return iter(primes)
+    return iter(primes[skip:])
 
 
 def prime_generator():
+    indx = 1
     end = 30
     prime_bucket = make_primes(end)
     while prime_bucket:
         try:
             yield next(prime_bucket)
+            indx += 1
         except StopIteration:
-            start = end
             end += 30
-            prime_bucket = make_primes(end, start)
+            prime_bucket = make_primes(end, indx)
             continue
 
+# Tests
+import timeit
+prime = prime_generator()
+print(timeit.timeit('next(prime)', number=10, globals=globals()))
 
-c = prime_generator()
-
-for i in range(30):
-    print(next(c))
+#for i in range(30):
+#    print(next(p))
 
