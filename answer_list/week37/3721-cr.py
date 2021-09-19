@@ -1,6 +1,5 @@
 ## Sieve of Eratosthenes O(log n log n)
 
-
 def get_primes(limit: int) -> list:
 
     bool_dict = {x:True for x in range(2, limit)}
@@ -26,7 +25,7 @@ medium = 1000
 large = 100000
 dont_do_it = 100000000
 
-print(get_primes(small))
-print(get_primes(medium))
+import timeit
+print(timeit.timeit('get_primes(small)', number=10, globals=globals()))
 #print(get_primes(large))
 
