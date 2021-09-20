@@ -17,71 +17,84 @@ import (
 )
 
 func main() {
-	start := time.Now()
-	var n int
-	var inf bool
+	var n, counter int
+	var inf, q bool
 	fmt.Printf("Enter the max prime (>2) or -1 for infinite: ")
 	fmt.Scanln(&n)
 	if n == -1 {
-		n = 100
+		n = 1000
 		inf = true
+		q = true
+	} else {
+		fmt.Printf("Do you want to print the primes? (1 for yes, 0 for no): ")
+		fmt.Scanln(&q)
 	}
-	Sieve(n, inf)
-	fmt.Printf("total time for %d: %f\n", n, time.Now().Sub(start).Seconds())
+	bitslc := make([]bool, n)
+	start := time.Now()
+	Sieve(n, &bitslc, &counter, inf, q)
+	fmt.Printf("Primes found: %d, Time elapsed: %fs\n", counter, time.Now().Sub(start).Seconds())
 }
 
-func Sieve(n int, inf bool) {
-	bitslc := make([]bool, n)
+func Sieve(n int, bitslc *[]bool, counter *int, inf bool, q bool) {
 	max := n
 	sqrtmax := math.Ceil(math.Sqrt(float64(max)))
+	*counter = 0
 
-	for i := range bitslc {
-		bitslc[i] = true
+	// Set all bits
+	for i := range *bitslc {
+		(*bitslc)[i] = true
 	}
-	bitslc[0], bitslc[1] = false, false
+	// 0,1 are not prime
+	(*bitslc)[0], (*bitslc)[1] = false, false
+	// Unset all powers of 2
 	for i := 4; i < max; i += 2 {
-		bitslc[i] = false
+		(*bitslc)[i] = false
 	}
+	// Outer loop will run for sqrt(max)
 	for i := 3; i < int(sqrtmax); i += 2 {
-		if bitslc[i] {
+		if (*bitslc)[i] {
 			for j := i * i; j < max; j += i {
-				bitslc[j] = false
+				(*bitslc)[j] = false
 			}
 		}
 	}
-	for i := range bitslc {
-		if bitslc[i] {
-			fmt.Println(i)
+	// Only used for printing
+	for i := range *bitslc {
+		if (*bitslc)[i] {
+			(*counter)++
+			if q {
+				fmt.Println(i)
+			}
 		}
 	}
-
+	// Infinite Sieve
 	if inf {
 		for {
-			// record old and reset max
-			oldLen := len(bitslc)
-			max = len(bitslc) * 2
+			// Record old and reset max
+			oldLen := len(*bitslc)
+			max = len(*bitslc) * 2
 			sqrtmax = math.Ceil(math.Sqrt(float64(max)))
 
 			// resize the bit array
-			new := make([]bool, (len(bitslc)+1)*2)
-			copy(new, bitslc)
-			bitslc = new
+			new := make([]bool, (len(*bitslc)+1)*2)
+			copy(new, *bitslc)
+			bitslc = &new
 
 			for i := oldLen - 1; i < max; i++ {
-				bitslc[i] = true
+				(*bitslc)[i] = true
 			}
 			for i := oldLen; i < max; i += 2 {
-				bitslc[i] = false
+				(*bitslc)[i] = false
 			}
 			for i := oldLen; i < int(sqrtmax); i += 2 {
-				if bitslc[i] {
+				if (*bitslc)[i] {
 					for j := i * i; j < max; j += 1 {
-						bitslc[j] = false
+						(*bitslc)[j] = false
 					}
 				}
 			}
 			for i := oldLen; i < max; i++ {
-				if bitslc[i] {
+				if (*bitslc)[i] {
 					fmt.Println(i)
 				}
 			}
