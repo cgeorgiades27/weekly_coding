@@ -34,8 +34,8 @@ def prime_generator():
 # Tests
 import timeit
 prime = prime_generator()
-print(timeit.timeit('next(prime)', number=10, globals=globals()))
+print(timeit.timeit('next(prime)', number=100, globals=globals()))
 
 #for i in range(30):
-#    print(next(p))
+#    print(next(prime))
 
