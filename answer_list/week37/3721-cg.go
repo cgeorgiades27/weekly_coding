@@ -13,21 +13,29 @@ package main
 import (
 	"fmt"
 	"math"
+	"os"
+	"strconv"
 	"time"
 )
 
 func main() {
-	var n, counter int
+	var n, counter int64
 	var inf, q bool
-	fmt.Printf("Enter the max prime (>2) or -1 for infinite: ")
-	fmt.Scanln(&n)
-	if n == -1 {
-		n = 1000
-		inf = true
-		q = true
+
+	if len(os.Args) > 1 {
+		n, _ = strconv.ParseInt(os.Args[1], 10, 32)
+		q, _ = strconv.ParseBool(os.Args[2])
 	} else {
-		fmt.Printf("Do you want to print the primes? (1 for yes, 0 for no): ")
-		fmt.Scanln(&q)
+		fmt.Printf("Enter the max prime (>2) or -1 for infinite: ")
+		fmt.Scanln(&n)
+		if n == -1 {
+			n = 1000
+			inf = true
+			q = true
+		} else {
+			fmt.Printf("Do you want to print the primes? (1 for yes, 0 for no): ")
+			fmt.Scanln(&q)
+		}
 	}
 	bitslc := make([]bool, n)
 	start := time.Now()
@@ -35,7 +43,7 @@ func main() {
 	fmt.Printf("Primes found: %d, Time elapsed: %fs\n", counter, time.Now().Sub(start).Seconds())
 }
 
-func Sieve(n int, bitslc *[]bool, counter *int, inf bool, q bool) {
+func Sieve(n int64, bitslc *[]bool, counter *int64, inf bool, q bool) {
 	max := n
 	sqrtmax := math.Ceil(math.Sqrt(float64(max)))
 	*counter = 0
@@ -47,11 +55,11 @@ func Sieve(n int, bitslc *[]bool, counter *int, inf bool, q bool) {
 	// 0,1 are not prime
 	(*bitslc)[0], (*bitslc)[1] = false, false
 	// Unset all powers of 2
-	for i := 4; i < max; i += 2 {
+	for i := int64(4); i < max; i += 2 {
 		(*bitslc)[i] = false
 	}
 	// Outer loop will run for sqrt(max)
-	for i := 3; i < int(sqrtmax); i += 2 {
+	for i := int64(3); i < int64(sqrtmax); i += 2 {
 		if (*bitslc)[i] {
 			for j := i * i; j < max; j += i {
 				(*bitslc)[j] = false
@@ -72,7 +80,7 @@ func Sieve(n int, bitslc *[]bool, counter *int, inf bool, q bool) {
 		for {
 			// Record old and reset max
 			oldLen := len(*bitslc)
-			max = len(*bitslc) * 2
+			max = int64(len(*bitslc) * 2)
 			sqrtmax = math.Ceil(math.Sqrt(float64(max)))
 
 			// resize the bit array
@@ -80,20 +88,20 @@ func Sieve(n int, bitslc *[]bool, counter *int, inf bool, q bool) {
 			copy(new, *bitslc)
 			bitslc = &new
 
-			for i := oldLen - 1; i < max; i++ {
+			for i := int64(oldLen) - 1; i < max; i++ {
 				(*bitslc)[i] = true
 			}
-			for i := oldLen; i < max; i += 2 {
+			for i := int64(oldLen); i < max; i += 2 {
 				(*bitslc)[i] = false
 			}
-			for i := oldLen; i < int(sqrtmax); i += 2 {
+			for i := int64(oldLen); i < int64(sqrtmax); i += 2 {
 				if (*bitslc)[i] {
 					for j := i * i; j < max; j += 1 {
 						(*bitslc)[j] = false
 					}
 				}
 			}
-			for i := oldLen; i < max; i++ {
+			for i := int64(oldLen); i < max; i++ {
 				if (*bitslc)[i] {
 					fmt.Println(i)
 				}
