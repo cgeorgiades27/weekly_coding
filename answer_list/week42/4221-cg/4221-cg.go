@@ -4,6 +4,8 @@ package main
 
 import (
 	"fmt"
+	"math"
+	"math/rand"
 )
 
 func main() {
@@ -14,14 +16,15 @@ func main() {
 	for i := 0; i < 16; i++ {
 		randUint = append(randUint, rand.Uint32())
 	}
-	// for _, elem := range uint32Arr {
-	// fmt.Printf("%12d:%7t\n", elem, isPowerOfFour(elem))
-	// }
-	// for _, elem := range randUint {
-	// 	fmt.Printf("%12d:%7t\n", elem, isPowerOfFour(elem))
-	// }
+	for _, elem := range uint32Arr {
+		fmt.Printf("%12d:%7t\n", elem, isPowerOfFour(elem))
+	}
+	for _, elem := range randUint {
+		fmt.Printf("%12d:%7t\n", elem, isPowerOfFour(elem))
+	}
 }
 
 func isPowerOfFour(num uint32) bool {
-	// if
+	res := math.Log(float64(num)) / math.Log(4)
+	return (res-math.Floor(res) == 0)
 }
