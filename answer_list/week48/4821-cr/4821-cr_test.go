@@ -4,6 +4,12 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"testing"
+)
+
+const (
+	TestCase       = "AAAABBBCCDAA"
+	ExpectedResult = "4A3B2C1D2A"
 )
 
 // Compares value at x[i] with previous value
@@ -53,4 +59,17 @@ func main() {
 	decoded_string := decode(encoded_string)
 	fmt.Printf("Encoded: %s, Decoded: %s", encoded_string, decoded_string)
 
+}
+
+func TestRunEncoding(t *testing.T) {
+	res := encode(TestCase)
+	if res != ExpectedResult {
+		t.Errorf("encode(%s) = %s; should be %s", TestCase, res, ExpectedResult)
+	}
+}
+
+func BenchmarkEncoding(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		encode(TestCase)
+	}
 }
