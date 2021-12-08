@@ -29,5 +29,5 @@ jobs:
       working-directory: ${{ github.event.inputs.path }}
     
     - name: Bench
-      run: go test -v -bench=.
+      run: go test -v -benchmem -bench=.
       working-directory: ${{ github.event.inputs.path }}
