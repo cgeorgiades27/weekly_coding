@@ -25,12 +25,13 @@ func Encode(str string) string {
 	for len(str) > 0 {
 		count := 0
 		ctx := str[0]
-		for len(str) > 0 && str[0] == ctx {
+		for str[0] == ctx {
 			count++
 			if len(str) > 1 {
 				str = str[1:]
 			} else {
 				str = ""
+				break
 			}
 		}
 		bs = bs + strconv.Itoa(count)
