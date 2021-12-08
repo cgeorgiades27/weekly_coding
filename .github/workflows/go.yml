@@ -34,3 +34,7 @@ jobs:
     - name: Test
       run: go test -v ./...
       working-directory: ${{ github.event.inputs.path }}
+    
+    - name: Bench
+      run: go test -bench=.
+      working-directory: ${{ github.event.inputs.path }}
