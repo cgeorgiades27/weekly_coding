@@ -4,16 +4,9 @@ on:
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
       path:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'The path of the Go test file to run'
+        description: 'The path of the folder were the Go file is'
         # Default value if no value is explicitly provided
         default: 'answer_list/week48/4821-cr/'
         # Input has to be provided for the workflow to run
@@ -36,5 +29,5 @@ jobs:
       working-directory: ${{ github.event.inputs.path }}
     
     - name: Bench
-      run: go test -bench=.
+      run: go test -v -benchmem -bench=.
       working-directory: ${{ github.event.inputs.path }}
