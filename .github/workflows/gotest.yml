@@ -1,4 +1,4 @@
-name: Go - Runt tests and benchmark
+name: Go - Run tests and benchmark
 
 on:
   workflow_dispatch:
