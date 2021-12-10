@@ -33,5 +33,5 @@ jobs:
         go-version: 1.17
     
     - name: Run Package
-      run: go run ${{ github.event.inputs.path }}${{ github.event.inputs.file }}
+      run: go run ${{ github.event.inputs.file }}
       working-directory: ${{ github.event.inputs.path }}
