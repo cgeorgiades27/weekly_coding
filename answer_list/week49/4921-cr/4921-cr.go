@@ -11,34 +11,34 @@ type Node struct {
 	visited bool
 }
 
-func get_paths(root *Node) [][]int {
-	stack := []*Node{root}
+func getPaths(root *Node) [][]int {
+	qu := []*Node{root}
 	path := make([]int, 0)
 	paths := make([][]int, 0)
-	for len(stack) > 0 {
-		cur_node := stack[0]
+	for ; len(qu) > 0; qu = qu[1:] {
+		currNode := qu[0]
 
-		if cur_node.left != nil && cur_node.right != nil {
-			path = append(path, cur_node.val)
+		if currNode.left != nil && currNode.right != nil {
+			path = append(path, currNode.val)
 
-			for cur_node.left != nil && !cur_node.left.visited {
-				cur_node = cur_node.left
-				cur_node.visited = true
-				stack = append(stack, cur_node)
-				path = append(path, cur_node.val)
+			for currNode.left != nil && !currNode.left.visited {
+				currNode = currNode.left
+				currNode.visited = true
+				qu = append(qu, currNode)
+				path = append(path, currNode.val)
 			}
 
 			if len(path) > 1 {
 				paths = append(paths, path)
 				path = []int{1}
 			}
-			cur_node = stack[0]
+			currNode = qu[0]
 
-			for cur_node.right != nil && !cur_node.right.visited {
-				cur_node = cur_node.right
-				cur_node.visited = true
-				stack = append(stack, cur_node)
-				path = append(path, cur_node.val)
+			for currNode.right != nil && !currNode.right.visited {
+				currNode = currNode.right
+				currNode.visited = true
+				qu = append(qu, currNode)
+				path = append(path, currNode.val)
 			}
 
 			if len(path) > 1 {
@@ -46,17 +46,16 @@ func get_paths(root *Node) [][]int {
 				path = []int{1}
 			}
 		}
-		stack = stack[1:]
 	}
 	return paths
 }
 
 func main() {
-	leaf_d := &Node{val: 5, left: nil, right: nil, visited: false}
-	leaf_c := &Node{val: 4, left: nil, right: nil, visited: false}
-	leaf_b := &Node{val: 3, left: leaf_c, right: leaf_d, visited: false}
-	leaf_a := &Node{val: 2, left: nil, right: nil, visited: false}
-	root := &Node{val: 1, left: leaf_a, right: leaf_b, visited: false}
+	leafD := &Node{val: 5, left: nil, right: nil, visited: false}
+	leafC := &Node{val: 4, left: nil, right: nil, visited: false}
+	leafB := &Node{val: 3, left: leafC, right: leafD, visited: false}
+	leafA := &Node{val: 2, left: nil, right: nil, visited: false}
+	root := &Node{val: 1, left: leafA, right: leafB, visited: false}
 
-	fmt.Println(get_paths(root))
+	fmt.Println(getPaths(root))
 }
