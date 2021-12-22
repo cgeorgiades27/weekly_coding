@@ -114,7 +114,6 @@ int main()
   }
   printMatrix(matrix);
   printVector(spiraled);
-  assert((39 == 39) && "answer should be 39");
 
   return 0;
 }

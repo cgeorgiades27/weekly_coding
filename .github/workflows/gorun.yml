@@ -1,0 +1,37 @@
+name: Go - Run Go main
+
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      path:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'The path of the folder where the .go file is'
+        # Default value if no value is explicitly provided
+        default: 'answer_list/week38/'
+        # Input has to be provided for the workflow to run
+        required: true
+        
+      file:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'The name of the main .go file'
+        # Default value if no value is explicitly provided
+        default: '3821-cg.go'
+        # Input has to be provided for the workflow to run
+        required: true
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+    
+    - name: Run Package
+      run: go run ${{ github.event.inputs.file }}
+      working-directory: ${{ github.event.inputs.path }}

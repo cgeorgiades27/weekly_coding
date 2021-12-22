@@ -48,9 +48,12 @@ func decode(encoded_s string) string {
 }
 
 func main() {
-	test_string := "AAAABBBCCDAA"
-	encoded_string := encode(test_string)
+	var input_string string
+	fmt.Println("\nTHUG: Yo I heard you needed something encoded...whatcha waiting for input it already")
+	fmt.Scanln(&input_string)
+	encoded_string := encode(input_string)
 	decoded_string := decode(encoded_string)
-	fmt.Printf("Encoded: %s, Decoded: %s", encoded_string, decoded_string)
+	fmt.Printf("\nTHUG: Here ya go %s\n...My 5BC...NOW!!!\nHaha thanks loser...you were never here understand!!\n", encoded_string)
+	fmt.Printf("\nRECIEPT Encoded: %s, Decoded: %s\n", encoded_string, decoded_string)
 
 }
