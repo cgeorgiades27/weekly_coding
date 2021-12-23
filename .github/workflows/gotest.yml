@@ -25,5 +25,5 @@ jobs:
         go-version: 1.17
     
     - name: Test and Benchmark
-      run: go test -v -benchmem -bench=.
+      run: go test -v -benchmem -bench=. -cover
       working-directory: ${{ github.event.inputs.path }}
