@@ -7,17 +7,12 @@ import (
 func findMajority(intSlice []int) int {
 	var m int
 	cMap := make(map[int]int)
-	half := len(intSlice) / 2.0
+	half := len(intSlice) / 2
 	for _, val := range intSlice {
-		_, ok := cMap[val]
-		if !ok {
-			cMap[val] = 1
-		} else {
-			cMap[val] += 1
-		}
+		cMap[val] += 1
 		if cMap[val] > half {
 			m = val
-			return m
+			break
 		}
 	}
 	return m
