@@ -1,12 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type CacheLRU struct {
 	cap   int
-	cache map[string]int
-	min   int
-	lru   string
+	cache map[string]time.Time
+	lruV  time.Time
+	lruK  string
 }
 
 func main() {
@@ -23,35 +26,39 @@ func main() {
 
 	for _, v := range input {
 		lruCache.add(v)
-		fmt.Printf("Added %q to the cache \n", v)
+		fmt.Printf("Added %q to the cache at %v\n", v, time.Now())
 	}
 	for _, v := range input {
-		x, y := lruCache.get(v)
-		fmt.Println(x, y)
+		x := lruCache.get(v)
+		fmt.Printf("%q %v\n", v, x)
 	}
 
 }
 
 func (c *CacheLRU) add(item string) {
 	if len(c.cache) == 0 {
-		c.cache = make(map[string]int)
-		c.min = 1
+		c.cache = make(map[string]time.Time)
+		c.lruV = time.Now()
 	}
 	if len(c.cache) < c.cap {
-		c.cache[item]++
-		if c.cache[item] <= c.min {
-			c.min = c.cache[item]
-			c.lru = item
+		c.cache[item] = time.Now()
+		if c.cache[item].UnixMicro() <= c.lruV.UnixMicro() {
+			c.lruV = c.cache[item]
+			c.lruK = item
 		}
 	} else {
-		delete(c.cache, c.lru)
-		c.cache[item]++
-		c.min = 1
-		c.lru = item
+		delete(c.cache, c.lruK)
+		c.cache[item] = time.Now()
+		c.lruV = time.Now()
+		c.lruK = item
 	}
 }
 
-func (c *CacheLRU) get(key string) (int, bool) {
+func (c *CacheLRU) get(key string) string {
 	elem, ok := c.cache[key]
-	return elem, ok
+	if ok {
+		return elem.String()
+	} else {
+		return "Null"
+	}
 }
