@@ -12,10 +12,21 @@ import (
 )
 
 func main() {
+	var tests = []struct {
+		x, y, expected int32
+	}{
+		{2, 3, 3},
+		{3, 2, 3},
+		{200, 199, 200},
+		{1999, 1998, 1999},
+	}
+	fmt.Println(tests[1].x)
 	fmt.Println(MaxOfTwo(20, 3))
 }
 
-func MaxOfTwo(x, y int) int {
-
-	return x & y
+// MaxOfTwo -  ***** I did NOT come up with this own my own. I gave in and sought help from the internet (╥_╥) ******
+func MaxOfTwo(x, y int32) int32 {
+	z := x - y         /* take the difference */
+	k := (z >> 31) & 1 /* check the most significant bit, if 1, z is negative */
+	return x - k*z     /* bigger number minus 0 or smaller plus difference bigger and smaller */
 }
