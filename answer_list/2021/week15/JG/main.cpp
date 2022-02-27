@@ -17,14 +17,15 @@ For example, if A is abcde and B is cdeab, return true. If A is abc and B is acb
 
 struct charLink
 {
-  
+
   /* data */
   int position;
   char character;
   std::shared_ptr<charLink> next;
-  charLink(int pos,char character){
-    position=pos;
-    this->character =character;
+  charLink(int pos, char character)
+  {
+    position = pos;
+    this->character = character;
   }
 };
 
@@ -42,18 +43,20 @@ std::shared_ptr<charLink> stringToCircularCharLink(std::string string)
   std::shared_ptr<charLink> Head;
   for (int i = 0; i < string.size(); i++)
   {
-    
-    auto newLink = std::make_shared<charLink>(i,string[i]);
-    if (prev!=nullptr){
-      prev->next=newLink;
-    }
-    prev= newLink;
 
-    if(i==0){
-      Head =newLink;
+    auto newLink = std::make_shared<charLink>(i, string[i]);
+    if (prev != nullptr)
+    {
+      prev->next = newLink;
+    }
+    prev = newLink;
+
+    if (i == 0)
+    {
+      Head = newLink;
     }
   }
-  prev->next=Head;
+  prev->next = Head;
   return Head;
 }
 
@@ -66,28 +69,26 @@ std::shared_ptr<charLink> stringToCircularCharLink(std::string string)
 
  */
 
-bool ifShiftedEnoughCouldTheyBeEqual(std::string s1,std::string s2){
+bool ifShiftedEnoughCouldTheyBeEqual(std::string s1, std::string s2)
+{
 
   auto Head = stringToCircularCharLink(s1);
   auto Head2 = stringToCircularCharLink(s2);
-  while(Head2->character!=Head->character){
-    Head2=Head2->next;
+  while (Head2->character != Head->character)
+  {
+    Head2 = Head2->next;
   }
   for (int i = 0; i < s1.size(); i++)
   {
-    if(Head2->character != Head->character){
+    if (Head2->character != Head->character)
+    {
       return false;
     }
-      Head2=Head2->next;
-      Head=Head->next;
+    Head2 = Head2->next;
+    Head = Head->next;
   }
   return true;
-
 }
-
-
-
-
 
 int main()
 {
@@ -95,13 +96,11 @@ int main()
   std::string s2 = "defgabc";
   std::string s3 = "abcdefg";
   std::string s4 = "abcdfeg";
-  
+
   //# Test Program
 
   assert((ifShiftedEnoughCouldTheyBeEqual(s1, s2) == true) && "should be true ");
   assert((ifShiftedEnoughCouldTheyBeEqual(s3, s4) == false) && "should be true ");
-
-  
 
   return 0;
 }
