@@ -18,7 +18,8 @@ func timesToAngles(times []string) {
 		minute := getMinute(v)
 		angle := getAngle(hour, minute)
 
-		fmt.Printf("%v has a angle of %v°\n", v, angle)
+		fmt.Printf("%v has an outer angle of %v° and an inner angle of %v°\n", v, angle, (360 - angle))
+
 	}
 }
 
@@ -40,9 +41,6 @@ func getAngle(h, m float64) float64 {
 	diff := h - m
 	angle := math.Round(math.Abs((diff * 30)))
 
-	if angle > 180 {
-		angle = 360 - angle
-	}
 
 	return angle
 }
