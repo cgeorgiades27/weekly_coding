@@ -67,6 +67,6 @@ func lookAndSay(s string) string {
 		result += string(s[curr])
 	}
 
-	fmt.Println(s)
+	fmt.Println(result)
 	return result
 }
