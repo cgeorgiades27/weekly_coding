@@ -22,20 +22,31 @@ In the above example, 2^6 + 2^5 + 2^4 + 2^3 + 2^1 + 2^0 = 123.
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
-char *base_2(int);
+void base_2(char *, int);
 
 int main(void)
 {
     int n = 123;
-    printf("%s\n", base_2(n));
+    char *buff = malloc((int)sizeof(n) * 8 + 1); // max size is 32 bits
+    base_2(buff, n);
+    printf("%s\n", buff);
+    free(buff);
+
     return 0;
 }
 
-char *base_2(int n)
+void base_2(char *buff, int n)
 {
     int sz = (int)sizeof(n) * 8;
     char *str = malloc(sz + 1);
+
+    if (str == NULL)
+    {
+        printf("error: malloc failed\n");
+        exit(0);
+    }
 
     int i = sz - 1;
     int j = 0;
@@ -57,5 +68,6 @@ char *base_2(int n)
     }
     str[j] = '\0';
 
-    return str;
+    strncpy(buff, str, sz - 1);
+    free(str);
 }
